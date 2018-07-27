@@ -82,7 +82,7 @@ router.delete("/:id", (req, res, next) => {
     .then(response => {
       res.status(codes.OK).json(response);
     })
-    .catch(() => {
+    .catch((err) => {
       next(err);
     });
 });
