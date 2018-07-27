@@ -37,6 +37,12 @@ router.get("/actions/:projectId", (req, res, next) => {
   projectModel
     .getProjectActions(projectId)
     .then(response => {
+      if (response.length === 0) {
+        throw {
+          code: codes.NOT_FOUND,
+          message: "There is no project actions with that project_id"
+        };
+      }
       res.status(codes.OK).json(response);
     })
     .catch(err => {
