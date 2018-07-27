@@ -33,5 +33,17 @@ router.get('/:id', (req, res, next) => {
         })
     });
 });
+router.post('/', (req, res, next) => {
+    projectModel.insert(req.body)
+    .then(response => {
+        res.status(codes.CREATED).json(response);
+    })
+    .catch(() => {
+        next({
+            code: codes.INTERNAL_SERVER_ERROR,
+            message: 'Could not create project at this time',
+        })
+    })
+});
 
 module.exports = router;
