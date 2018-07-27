@@ -50,9 +50,13 @@ router.get("/actions/:projectId", (req, res, next) => {
     });
 });
 router.post("/", (req, res, next) => {
+    const { name } = req.body;
   projectModel
     .insert(req.body)
     .then(response => {
+      if(name.length > 128) {
+          throw { code: codes.BAD_REQUEST, message: "Number of characters for name can only be up to 128"}
+      }
       res.status(codes.CREATED).json(response);
     })
     .catch(err => {
