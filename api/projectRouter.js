@@ -17,5 +17,19 @@ router.get('/', (req, res, next) => {
         })
     });
 });
+router.get('/:id', (req, res, next) => {
+    const { id } = req.params;
+    projectModel.get(id)
+    .then(response => {
+        res.status(codes.OK).json(response);
+    })
+    .catch((err) => {
+        next({
+            code: codes.INTERNAL_SERVER_ERROR,
+            message: 'Could not get project at this time',
+            err
+        })
+    });
+});
 
 module.exports = router;
