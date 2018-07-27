@@ -46,4 +46,22 @@ router.post('/', (req, res, next) => {
     })
 });
 
+router.put('/:id', (req,res,next) => {
+    const { id } = req.params;
+    projectModel.update(id, req.body)
+    .then(response => {
+        if(response === null) {
+            throw codes.NOT_FOUND
+        }
+        res.status(codes.OK).json(response);
+    })
+    .catch((err) => {
+        
+        next({
+            code: err,
+            message: 'Could not update project at this time',
+        })
+    })
+})
+
 module.exports = router;
