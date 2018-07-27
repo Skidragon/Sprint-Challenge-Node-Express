@@ -24,7 +24,17 @@ router.post('/', (req,res, next) => {
         next(err);
     })
 })
+router.put('/:id', (req,res, next) => {
+    const { id } = req.params;
 
+    actionModel.update(id, req.body)
+    .then(response => {
+        res.status(codes.OK).json(response);
+    })
+    .catch(err => {
+        next(err);
+    })
+})
 router.delete('/:id', (req,res, next) => {
     actionModel.remove(req.params.id)
     .then(response => {
