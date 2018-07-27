@@ -36,7 +36,8 @@ router.put('/:id', (req,res, next) => {
     })
 })
 router.delete('/:id', (req,res, next) => {
-    actionModel.remove(req.params.id)
+    const { id } = req.params;
+    actionModel.remove(id)
     .then(response => {
         res.status(codes.OK).json(response);
     })
