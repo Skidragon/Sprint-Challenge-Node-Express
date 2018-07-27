@@ -13,9 +13,12 @@ server.use('/api/actions', actionRoutes);
 server.use('/api/projects', projectRoutes);
 
 server.use((err, req, res, next) => {
+    err.code = err.code !== undefined ? err.code : codes.INTERNAL_SERVER_ERROR;
     const errorInfo = {
-        ...err,
+        status: err.code,
+        errorMessage: err.message,
         success: false,
+        route: err.route
     }
     switch (errorInfo.code) {
         case codes.BAD_REQUEST: 
