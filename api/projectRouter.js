@@ -64,4 +64,17 @@ router.put('/:id', (req,res,next) => {
     })
 })
 
+router.delete('/:id', (req, res, next) => {
+    const { id } = req.params;
+    projectModel.remove(id)
+    .then(response => {
+        res.status(codes.OK).json(response);
+    })
+    .catch(() => {
+        next({
+            code: codes.INTERNAL_SERVER_ERROR,
+            message: 'Could not delete project at this time'
+        })
+    })
+})
 module.exports = router;
