@@ -20,14 +20,16 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     const { id } = req.params;
     projectModel.get(id)
+    .catch(() => {
+        res.status(codes.NOT_FOUND).json({ message: 'Could not find project with that id'});
+    })
     .then(response => {
         res.status(codes.OK).json(response);
     })
-    .catch((err) => {
+    .catch(() => {
         next({
             code: codes.INTERNAL_SERVER_ERROR,
             message: 'Could not get project at this time',
-            err
         })
     });
 });
