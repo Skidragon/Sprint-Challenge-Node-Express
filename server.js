@@ -13,20 +13,19 @@ server.use('/api/actions', actionRoutes);
 server.use('/api/projects', projectRoutes);
 
 server.use((err, req, res, next) => {
-
     const errorInfo = {
         ...err,
         success: false,
     }
     switch (errorInfo.code) {
         case codes.BAD_REQUEST: 
-            res.json(codes.BAD_REQUEST).json(errorInfo);
+            res.status(codes.BAD_REQUEST).json(errorInfo);
             return;
         case codes.NOT_FOUND: 
-            res.json(codes.NOT_FOUND).json(errorInfo);
+            res.status(codes.NOT_FOUND).json(errorInfo);
             return;
         default:
-        res.json(codes.INTERNAL_SERVER_ERROR).json(errorInfo);
+        res.status(codes.INTERNAL_SERVER_ERROR).json(errorInfo);
     }
 });
 
